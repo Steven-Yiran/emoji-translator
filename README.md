@@ -25,5 +25,5 @@ Start frontend
 ```bash
 cd client
 npm install  # Run once
-REACT_APP_SERVER_ADDRESS="http://localhost:5000" npm start
+npm start
 ```
