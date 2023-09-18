@@ -1,5 +1,6 @@
 import gzip
 import os
+from typing import List
 
 import jsonlines
 import numpy as np
@@ -44,12 +45,13 @@ class EmojiSearchApp:
             self._load_emoji_embeddings()
         return self._embeddings
 
-    def get_openai_embedding(self, text: str) -> list[float]:
+    def get_openai_embedding(self, text: str) -> List[float]:
         result = openai.Embedding.create(input=text, model=EMBEDDING_MODEL)
         return result["data"][0]["embedding"]
 
-    def get_top_relevant_emojis(self, query: str, k: int = 20) -> list[dict]:
+    def get_top_relevant_emojis(self, query: str, k: int = 20) -> List[dict]:
         query_embed = self.get_openai_embedding(query)
+        # Measure the similarity between the query and each emoji using dot product
         dotprod = np.matmul(self.embeddings, np.array(query_embed).T)
         m_dotprod = np.median(dotprod)
         ind = np.argpartition(dotprod, -k)[-k:]
@@ -69,6 +71,7 @@ app = Flask(__name__)
 emoji_search_app = EmojiSearchApp()
 CORS(app, support_credentials=True)
 
+
 @app.route("/search", methods=["POST"])
 def search():
     error = None
@@ -81,9 +84,10 @@ def search():
         error = str(err)
     return jsonify(error=error, result=result)
 
+
 @app.route("/")
 def index():
-    return 'Hello World!'
+    return "Hello World!"
+
 
 app.run()
-
