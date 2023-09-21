@@ -66,14 +66,6 @@ class EmojiSearchApp:
         ]
         return result
 
-    def translate_sentence(self, query: str) -> str:
-        tokens = query.split(" ")
-        result = []
-        for t in tokens:
-            emoji = self.get_top_relevant_emojis(t, k=1)
-            result.append(emoji[0]["emoji"])
-        return " ".join(result)
-
 
 app = Flask(__name__)
 emoji_search_app = EmojiSearchApp()
@@ -93,22 +85,9 @@ def search():
     return jsonify(error=error, result=result)
 
 
-@app.route("/translate", methods=["POST"])
-def translate():
-    error = None
-    result = ""
-
-    query = request.get_json().get("query")
-    try:
-        result = emoji_search_app.translate_sentence(query)
-    except Exception as err:
-        error = str(err)
-    return jsonify(error=error, result=result)
-
-
 @app.route("/")
 def index():
-    return "Emoji Translator App, 1.0.0"
+    return "Hello World!"
 
 
 app.run()
