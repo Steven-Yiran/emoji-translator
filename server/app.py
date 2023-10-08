@@ -87,7 +87,7 @@ def search():
 
 @app.route("/")
 def index():
-    return "Hello World!"
+    return "Emoji Search API v1.0.0"
 
 
 app.run()

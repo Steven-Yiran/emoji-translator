@@ -44,7 +44,7 @@ function App() {
 
   return (
     <>
-      <h1>Emoji Translator</h1>
+      <h1>🐴 Emoji Search</h1>
       <form onSubmit={runSearch}>
         <input
           type="text"
