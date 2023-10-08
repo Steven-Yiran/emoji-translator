@@ -90,4 +90,4 @@ def index():
     return "Emoji Search API v1.0.0"
 
 
-app.run()
+app.run(host='0.0.0.0', port=5000)
